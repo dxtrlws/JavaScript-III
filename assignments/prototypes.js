@@ -15,6 +15,10 @@
   * destroy() // prototype method -> returns the string: 'Object was removed from the game.'
 */
 
+function extend (Child, Parent) {
+  Child.prototype = Object.create(Parent.prototype);
+}
+
 function GameObject (gameAtters) {
   this.createdAt = gameAtters.createdAt;
   this.dimensions = gameAtters.dimensions;
@@ -31,7 +35,8 @@ GameObject.prototype.destroy = function () {
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
-CharacterStats.prototype = Object.create(GameObject.prototype);
+
+extend(CharacterStats, GameObject);
 
 function CharacterStats (characterAtters) {
   GameObject.call(this, characterAtters);
@@ -52,7 +57,7 @@ CharacterStats.prototype.takeDamage = function () {
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
   */
- Humanoid.prototype = Object.create(CharacterStats.prototype);
+extend(Humanoid, CharacterStats);
  
  function Humanoid (humanoidAtters) {
    CharacterStats.call(this, humanoidAtters);
